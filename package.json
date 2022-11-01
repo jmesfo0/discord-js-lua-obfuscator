@@ -1,0 +1,21 @@
+{
+  "name": "nodejs-custom-version",
+  "version": "1.0.0",
+  "description": "Steps:",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "keywords": [],
+  "author": "jmes",
+  "license": "ISC",
+  "dependencies": {
+    "cross-fetch": "^3.1.5",
+    "discord.js": "13.10",
+    "events": "^3.3.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "node": "^16.6.1"
+  }
+}

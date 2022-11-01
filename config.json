@@ -1,0 +1,12 @@
+{
+  "prefix": "!",
+  "owner": "botowner-user-id",
+  "channels": [
+    "channel-id",
+    "channel-id"
+  ],
+  "whitelist": [
+    "user-id",
+    "user-id"
+  ]
+}
