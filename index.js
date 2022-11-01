@@ -73,8 +73,8 @@ client.on('messageCreate', (message) => {
       let filename = createID(7);
       if (code) {
         message.channel.send('obfuscating...');
-        fs.writeFileSync(`./uploads/file-${filename}.lua`, code.toString());
-        thefile = fs.readFileSync(`./uploads/file-${filename}.lua`, 'utf-8');
+        fs.writeFileSync(`file-${filename}.lua`, code.toString());
+        thefile = fs.readFileSync(`file-${filename}.lua`, 'utf-8');
 
         fs.readFile(`obfuscate.lua`, 'utf8', function(err, data) {
           if (err) {
@@ -82,39 +82,39 @@ client.on('messageCreate', (message) => {
           }
           var result = data.replace(/--SCRIPT/i, thefile);
 
-          fs.writeFile(`./obfuscated/file-${filename}.obfuscated.copy.lua`, result, 'utf8', function(err) {
+          fs.writeFile(`file-${filename}.obfuscated.copy.lua`, result, 'utf8', function(err) {
             if (err) return console.log(err);
           });
         });
         setTimeout(() => {
-          exec(`lua ./obfuscated/file-${filename}.obfuscated.copy.lua`,
+          exec(`lua file-${filename}.obfuscated.copy.lua`,
             function(error, stdout) {
               if (error !== null) {
                 console.log('exec error: ' + error);
               }
-              fs.writeFile(`./obfuscated/file-${filename}.obfuscated.lua`, stdout, 'utf8', function(err) {
+              fs.writeFile(`file-${filename}.obfuscated.lua`, stdout, 'utf8', function(err) {
                 if (err) return console.log(err);
               });
             });
         }, 5000);
 
         setTimeout(() => {
-          const buffer = fs.readFileSync(`./obfuscated/file-${filename}.obfuscated.lua`);
-          const file = new MessageAttachment(`./obfuscated/file-${filename}.obfuscated.lua`);
+          const buffer = fs.readFileSync(`file-${filename}.obfuscated.lua`);
+          const file = new MessageAttachment(`file-${filename}.obfuscated.lua`);
           //message.channel.send('there u go');
           message.channel.send({
             content: 'there u go',
             files: [{
-              attachment: `./obfuscated/file-${filename}.obfuscated.lua`,
+              attachment: `file-${filename}.obfuscated.lua`,
             }]
           });
 
-          fs.unlinkSync(`./uploads/file-${filename}.lua`)
+          fs.unlinkSync(`file-${filename}.lua`)
 
         }, 10000);
         setTimeout(() => {
-          fs.unlinkSync(`./obfuscated/file-${filename}.obfuscated.lua`);
-          fs.unlinkSync(`./obfuscated/file-${filename}.obfuscated.copy.lua`);
+          fs.unlinkSync(`file-${filename}.obfuscated.lua`);
+          fs.unlinkSync(`file-${filename}.obfuscated.copy.lua`);
         }, 60000);
       } else {
         message.channel.send('no file or code block');
@@ -145,8 +145,8 @@ async function obfuscate(content, message) {
   if (attachment) {
     let removedext = attachment.name.replace('.txt', '')
     request.get(attachment.url)
-    fs.writeFileSync(`./uploads/file-${filename}.lua`, content.toString());
-    thefile = fs.readFileSync(`./uploads/file-${filename}.lua`, 'utf-8');
+    fs.writeFileSync(`file-${filename}.lua`, content.toString());
+    thefile = fs.readFileSync(`file-${filename}.lua`, 'utf-8');
 
     fs.readFile(`obfuscate.lua`, 'utf8', function(err, data) {
       if (err) {
@@ -154,43 +154,43 @@ async function obfuscate(content, message) {
       }
       var result = data.replace(/--SCRIPT/i, thefile);
 
-      fs.writeFile(`./obfuscated/file-${filename}.obfuscated.copy.lua`, result, 'utf8', function(err) {
+      fs.writeFile(`file-${filename}.obfuscated.copy.lua`, result, 'utf8', function(err) {
         if (err) return console.log(err);
       });
     });
     setTimeout(() => {
-      exec(`bin/luvit ./obfuscated/file-${filename}.obfuscated.copy.lua`,
+      exec(`bin/luvit file-${filename}.obfuscated.copy.lua`,
         function(error, stdout) {
           if (error !== null) {
             console.log('exec error: ' + error);
-            fs.writeFile(`./obfuscated/file-${filename}.obfuscated.lua`, error.toString(), 'utf8', function(err) {
+            fs.writeFile(`file-${filename}.obfuscated.lua`, error.toString(), 'utf8', function(err) {
               if (err) return console.log(err);
             });
             return;
           }
-          fs.writeFile(`./obfuscated/file-${filename}.obfuscated.lua`, stdout, 'utf8', function(err) {
+          fs.writeFile(`file-${filename}.obfuscated.lua`, stdout, 'utf8', function(err) {
             if (err) return console.log(err);
           });
         });
     }, 5000);
 
     setTimeout(() => {
-      const buffer = fs.readFileSync(`./obfuscated/file-${filename}.obfuscated.lua`);
-      const file = new MessageAttachment(`./obfuscated/file-${filename}.obfuscated.lua`);
+      const buffer = fs.readFileSync(`file-${filename}.obfuscated.lua`);
+      const file = new MessageAttachment(`file-${filename}.obfuscated.lua`);
       //message.channel.send('there u go');
       message.channel.send({
         content: 'there u go',
         files: [{
-          attachment: `./obfuscated/file-${filename}.obfuscated.lua`,
+          attachment: `file-${filename}.obfuscated.lua`,
         }]
       });
 
-      fs.unlinkSync(`./uploads/file-${filename}.lua`)
+      fs.unlinkSync(`file-${filename}.lua`)
 
     }, 10000);
     setTimeout(() => {
-      fs.unlinkSync(`./obfuscated/file-${filename}.obfuscated.lua`);
-      fs.unlinkSync(`./obfuscated/file-${filename}.obfuscated.copy.lua`);
+      fs.unlinkSync(`file-${filename}.obfuscated.lua`);
+      fs.unlinkSync(`file-${filename}.obfuscated.copy.lua`);
     }, 60000);
 
   }
