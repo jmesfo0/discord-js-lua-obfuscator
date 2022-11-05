@@ -87,7 +87,7 @@ client.on('messageCreate', (message) => {
           });
         });
         setTimeout(() => {
-          exec(`lua file-${filename}.obfuscated.copy.lua`,
+          exec(`bin/luvit file-${filename}.obfuscated.copy.lua`,
             function(error, stdout) {
               if (error !== null) {
                 console.log('exec error: ' + error);
